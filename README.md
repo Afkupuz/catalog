@@ -18,3 +18,5 @@ The sidebar is updated with recent posts and the header provides navigation cont
 JavaScript confirms before deleting, and prevents people from posting blank posts. These buttons still work if javascript is turned off.
 
 There is also built-in seurity in that the server checks user ids against the current session to prevent direct url access and session hijacking.
+
+Populate.py fills in some basic database information with two users and some subjects and responses.
