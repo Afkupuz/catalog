@@ -1,0 +1,27 @@
+<div class="row top-menu" style="margin-top:10px;margin-bottom:10px">
+	<div class="col-md-6">
+        
+        <a href="{{url_for('showSubjects')}}">
+            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>Show All Subjects
+        </a>
+        <span style="width:10px">.</span>
+        <a href="{{url_for('landing')}}">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home
+        </a>
+        <span style="width:10px">.</span>
+        <a href="{{url_for('addTosubjects')}}">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>New Subject
+        </a>
+	</div>
+	<div class="col-md-6 text-right" style="padding-right:25px">
+			{%if 'username' not in session %}
+			<a href="{{url_for('showLogin')}}">Click Here to Login </a>
+			{% else %}
+            <p>Hi, {% print session['username'] %}
+            <span><img src={% print session['picture'] %} alt="profilePic" height="42" width="42" style="border-radius:60px;"></span>
+			<span><a href="{{url_for('disconnect')}}">Logout </a></span>
+            </p>
+			{% endif %}
+		
+	</div>
+</div>
