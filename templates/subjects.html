@@ -1,0 +1,47 @@
+
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div>
+
+	<h1> Here is a list of Subjects </h1>
+        {%if 'username' not in session %}
+        <a href="{{url_for('showLogin')}}">Login to post</a>
+        {% else %}
+        <div>
+            <a href="{{url_for('addTosubjects')}}">
+                <button class="btn btn-default" id="new-restaurant">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Add Subject
+                </button>
+            </a>
+        </div>
+        {% endif %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li><strong>{{message}}</strong></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    
+    {% include "sidebar.html" %}
+    
+    {% for s in subjects %}
+    <div class="subjectlist">
+    <a href = "{{url_for('ShowResponds', subjects_id = s.id)}}" style="text-decoration:none">
+        <div style="float:left; margin: 5px"><img src={{s.picture}} alt="profilePic" height="84" width="84" style="border-radius:60px;padding:5px">
+        </div>
+        <span>
+            <h2 style="text-decoration: underline;font-size:24px">{{s.title}}</h2>
+            <h2>{{s.body}}</h2>
+            <p>posted by: {{s.name}} on {{s.creation_date}}</p>
+        </span>
+    </a>
+    </div>
+    
+    {% endfor %}
+</div>
+{% endblock %}
