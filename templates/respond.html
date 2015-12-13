@@ -1,0 +1,95 @@
+
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<script type="text/javascript" src="/static/script.js"></script>
+
+
+<div class="row divider green">
+    <div class="col-md-11 col-md-offset-1 padding-none">
+        
+        {% include "sidebar.html" %}
+        <div class="postbox">
+            <h1>{{subjects.title}}</h1>
+            <h2>{{subjects.body}}</h2>
+        </div>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+        {% for message in messages %}
+        <li><strong>{{message}}</strong></li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        {% if session['user_id'] == subjects.user_id %}
+            <button class="modbtn">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true" ></span>
+                <a href="{{url_for('editSubject', subjects_id = subjects.id )}}"> Edit Post </a>
+            </button>
+            <button class="modbtn">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true" ></span>
+                <a onclick="return confirm('Are you sure?');" href="{{url_for('delete', subjects_id = subjects.id, response_id = 0)}}"> Delete </a>
+            </button>
+        {% endif %}
+	<div >
+		<div class="col-md-6 col-md-offset-0 padding-top">
+            <form action="#" method = "post" id="new">
+                {%if 'username' not in session %}
+                <a href="{{url_for('showLogin')}}">Login to post</a>
+                {% else %}
+                <div class="form-group">
+                    
+                    <label for="text">Post:</label>
+                    <textarea class="form-control" maxlength="999" rows="3" id="inputText" name="text" placeholder=“What do you want to say?”></textarea>
+                    <p class="pcounter">999</p>
+                    
+                    <button type="submit" class="btn btn-default" id="submit" type="submit">
+                    <span class="glyphicon glyphicon-pushpin" aria-hidden="true" ></span>
+                        Post
+                    </button>
+                </div>
+                {% endif %}
+            </form>
+                
+            {% for r in response %}
+            <div class="userpost">
+                <div style="float:left;display:inline-block"><img src={{r.picture}} alt="profilePic" height="54" width="54" style="border-radius:60px;padding:5px"></div>
+                    <div style="display:inline-block">
+                    <p>{{r.text}}</p>
+                    <p>Posted: {{r.creation_date}} by {{r.name}}</p>
+                    </div>
+                    {% if session['user_id'] == subjects.user_id %}
+                    <a class="modbtn" onclick="return confirm('Are you sure?');" href="{{url_for('censor', subjects_id = subjects.id, response_id = r.id)}}">
+                        <button type="button" id="submit" > censor </button>
+                    </a>
+                    {% endif %}
+                    {% if session['user_id'] == r.user_id %}
+                    <div style="float:right;">
+        
+                        <a class="modbtn" onclick="return confirm('Are you sure?');" href="{{url_for('delete', subjects_id = subjects.id, response_id = r.id)}}">
+                            <button type="button" id="submit" > Delete </button>
+                        </a>
+                        
+                        
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+		</div>
+	</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
