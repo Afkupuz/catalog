@@ -1,0 +1,36 @@
+<div class="sidebar">
+    <h2>Recent Posts</h2>
+    
+    <script type="text/javascript" >
+        
+        $(document).ready(function() {
+                          console.log("hello")
+                          });
+        </script>
+    {% for i in side[0:3] %}
+        <p>
+        <a href = "{{url_for('ShowResponds', subjects_id = i.id)}}" style="text-decoration:none">
+        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> {{i.title}}</a>
+        </p>
+    {% endfor %}
+    
+    <h2>Other interesting sites</h2>
+    
+    <p>
+    <a href = "http://digitalblasphemy.com" style="text-decoration:none">
+        <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Digital Blasphemy</a>
+    </p>
+    
+    <p>
+    <a href = "udacity.com" style="text-decoration:none">
+        <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Udacity</a>
+    </p>
+    
+    <p>
+    <a href = "http://gatherer.wizards.com/Pages/Default.aspx" style="text-decoration:none">
+        <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Magic</a>
+    </p>
+    
+    
+    
+</div>
