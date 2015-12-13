@@ -1,0 +1,48 @@
+
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div>
+	<h1> Hello and Welcome,
+
+			{%if 'username' not in session %}
+			Stranger!
+			{% else %}
+			{{logged.username}}
+			{% endif %}
+	</h1>
+
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<ul>
+	{% for message in messages %}
+  	<li><strong>{{message}}</strong></li>
+  	{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
+    {% include "sidebar.html" %}
+	<div style="margin:15px">
+		<h2> This is the main landing page of the subjects and list posts! </h2>
+
+		<p> This website was developed as a Udacity project! </p>
+
+		<p> I am having trouble balancing time spent on this project and <br>
+        getting it done so that I can move on to the next project.</p>
+        
+        <p> There is a lot more that I would like to add, but I have to stop somewhere... </p>
+        
+        <p> Please remember to login in order to create posts and respond </p>
+        
+	</div>
+    <div style="margin:15px">
+        <h2> This page is kind of boring, so here is a cool pic: </h2>
+        
+        <img src="http://orig10.deviantart.net/abaa/f/2009/351/c/b/arcane_magic_by_slashriot.jpg" alt="magic" height="500" width="600">
+    </div>
+
+</div>
+{% endblock %}
+
+
