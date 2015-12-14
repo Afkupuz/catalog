@@ -4,6 +4,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 from database_setup_list import Base, Subjects, Response, User
+from functools import wraps
+from flaskext.xmlrpc import XMLRPCHandler, Fault
 
 # imports for login function
 
@@ -19,6 +21,9 @@ import requests
 # define app name
 
 app = Flask(__name__)
+
+handler = XMLRPCHandler('api')
+handler.connect(app, '/api')
 
 # connect to project database
 
@@ -323,10 +328,15 @@ def disconnect():
 # censor posts /<>/<>/censor                    - none
 
 
+def login_required(log):
+    @wraps(log)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in login_session:
+            return redirect(url_for('showLogin'))
+        return log(*args, **kwargs)
+    return decorated_function
+
 # main landing page
-@app.route('/test')
-def test():
-    return render_template('other.html')
 
 @app.route('/')
 @app.route('/index')
@@ -337,6 +347,7 @@ def landing():
 
 # display all subjects checks if user is logged in for posts
 
+@handler.register
 @app.route('/subjects/')
 def showSubjects():
     side = session.query(Subjects).order_by(desc(Subjects.id)).all()
@@ -361,8 +372,10 @@ def subjectsJSON():
     subjects = session.query(Subjects).all()
     return jsonify(subjects=[s.serialize for s in subjects])
 
+
 # displays one subject and related posts checks for login
 
+@handler.register
 @app.route('/subjects/<int:subjects_id>', methods=['GET','POST'])
 def ShowResponds(subjects_id):
     side = session.query(Subjects).order_by(desc(Subjects.id)).all()
@@ -400,7 +413,7 @@ def ShowResponds(subjects_id):
 # jsonify responses
 
 @app.route('/subjects/<int:subjects_id>/JSON')
-def subjectsJSON(subjects_id):
+def responseJSON(subjects_id):
     response = session.query(Response).filter_by(subjects_id = subjects_id).all()
     return jsonify(Response=[r.serialize for r in response])
 
@@ -408,9 +421,8 @@ def subjectsJSON(subjects_id):
 # creates new post if logged in
 
 @app.route('/subjects/new', methods=['GET','POST'])
+@login_required
 def addTosubjects():
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == 'POST':
         if len(request.form['name']) < 1 or len(request.form['text']) < 1 :
             flash("Please inlcude both title and subject")
@@ -428,9 +440,8 @@ def addTosubjects():
 # edits subject and checks user authority
 
 @app.route('/subjects/<int:subjects_id>/edit', methods=['GET','POST'])
+@login_required
 def editSubject(subjects_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     editedSubject = session.query(Subjects).filter_by(id=subjects_id).one()
     if editedSubject.user_id != login_session['user_id']:
         return "<script>function myFunction() {alert('You are not authorized to edit this subject. Please create your own subject in order to edit.');}</script><body onload='myFunction()''>"
@@ -448,6 +459,7 @@ def editSubject(subjects_id):
 # deletes subjecs or responses based on passed values
 
 @app.route('/<int:subjects_id>/<int:response_id>/delete', methods=['GET'])
+@login_required
 def delete(subjects_id, response_id):
     if response_id == 0:
         deletedSubject = session.query(Subjects).filter_by(id=subjects_id).one()
@@ -469,6 +481,7 @@ def delete(subjects_id, response_id):
 # censors posts that the primay subject organizer doesnt like
 
 @app.route('/<int:subjects_id>/<int:response_id>/censor', methods=['GET'])
+@login_required
 def censor(subjects_id, response_id):
     if response_id != 0:
         editedResponse = session.query(Response).filter_by(id=response_id).one()
@@ -486,4 +499,4 @@ def censor(subjects_id, response_id):
 if __name__ == '__main__':
     app.secret_key = 'SDUsdG2264tI&SD78godo3rP(*dorh2o928#$g3GFGSFG73rwd3122e4tgr3faw4wyhgOKIY78di3d'
     app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=5000)
