@@ -34,6 +34,7 @@ class Subjects(Base):
     update_date = Column(Date, onupdate= _today)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+    response1 = relationship("Response", cascade = "all, delete-orphan")
 
     @property
     def serialize(self):
