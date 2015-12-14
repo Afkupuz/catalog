@@ -1,7 +1,7 @@
 # catalog
 Udacity project 3
 
-Configuration:
+Configuration:<br>
 In this project I developed an internal server that serves localhost port 5000
 updated virtual machine with:
 pip install werkzeug==0.8.3
