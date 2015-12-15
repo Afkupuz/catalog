@@ -2,10 +2,10 @@
 Udacity project 3
 
 Configuration:<br>
-In this project I developed an internal server that serves localhost port 5000
-updated virtual machine with:
-pip install werkzeug==0.8.3
-pip install flask==0.9
+In this project I developed an internal server that serves localhost port 5000<br>
+updated virtual machine with:<br>
+pip install werkzeug==0.8.3<br>
+pip install flask==0.9<br>
 
 Project details:<br>
 Using Flask, CRUD, and SQLAlchemy I have prepared a web application that allows users to log in via google and facebook using oauth2.
