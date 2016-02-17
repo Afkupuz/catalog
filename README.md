@@ -8,8 +8,8 @@ pip install werkzeug==0.8.3<br>
 pip install flask==0.9<br>
 
 ##Project details:<br>
-Using Flask, REST, CRUD, API endpoints and SQLAlchemy I have prepared a web application that allows users to log in via google and facebook using oauth2.<br>
-Templates are presented depending on URL requests and serve infromation stored in the sql database.<br>
+Using Flask, REST, CRUD, API endpoints and SQLAlchemy I have prepared a web application that allows users to log in via Google and Facebook using OAuth2.<br>
+Templates are presented depending on URL requests and serve infromation stored in the SQL database.<br>
 
 1. Install Vagrant and VirtualBox  
 2. Clone the fullstack-nanodegree-vm  
@@ -21,7 +21,7 @@ Templates are presented depending on URL requests and serve infromation stored i
 ##My Project:  
 
 To run:  
-Have vagrant installed and launch an instance where the tournament folder is accessable  
+Have vagrant installed and launch an instance where the tournament folder is accessible  
 Example from the OSX terminal:  
 $ vagrant up (launches the vagrant server)  
 $ vagrant ssh (ssh login to that server)  
@@ -33,8 +33,8 @@ From the catalog folder $ python project.py will host the website on localhost:5
 ##Features:<br>
 This site provides users with the ability to create subjects and respond to other peoples subjects.<br>
 Users can edit and delete their subjects as well as censor posts they dont like, but they can't touch other peoples subjects.<br>
-Users can delete their own responses, but can not interact with other peoples sujects or responses.<br>
+Users can delete their own responses, but can not interact with other people's subjects or responses.<br>
 The sidebar is updated with recent posts and the header provides navigation control.<br>
-JavaScript confirms before deleting, and prevents people from posting blank posts. These buttons still work if javascript is turned off.<br>
-There is also built-in seurity in that the server checks user ids against the current session to prevent direct url access and session hijacking.<br>
+JavaScript confirms before deleting, and prevents people from posting blank posts. These buttons still work if javascript is turned off, but lose the warning functionality.<br>
+There is also built-in security in that the server checks user ids against the current session to prevent direct url access and session hijacking.<br>
 
