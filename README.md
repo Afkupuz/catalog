@@ -1,6 +1,8 @@
 # Catalog
 The third project as part of Udacity's Full Stack NanoDegree program
 
+Update: Will be going live on ubuntu server soon!
+
 ##Configuration:<br>
 In this project I developed an internal server that serves localhost port 5000<br>
 updated virtual machine with:<br>
